@@ -22,7 +22,7 @@ function(epp, jQuery, Backbone, Email) {
     index: function() {
       var emails = new Email.Collection();
       window.emails = emails;
-      
+
       emails.fetch().success(function(){
         var main = new Backbone.LayoutManager({
           template: 'main',
@@ -33,6 +33,7 @@ function(epp, jQuery, Backbone, Email) {
         
         emails.each(function(email) {
           main.views['#sidebar'].view("ul", new Email.Views.SidebarItem({ model: email}), true);
+          
         });
         
         app.bind('showbody', function( model){
@@ -42,9 +43,10 @@ function(epp, jQuery, Backbone, Email) {
         
         main.render(function( el ){
           $('#main').html( el );
-        });
+        })
         
       });
+      console.log(emails.models.length);
       
     }
   });

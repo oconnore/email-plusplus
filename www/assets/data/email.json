@@ -1,6 +1,9 @@
 [
   {
-    "from": "eric@awesome.com",
+    "from": {
+      "name": "Eric O'conner",
+      "email": "eric@awesome.com"
+    },
     "cc": [
       "boaz@bocoup,com",
       "tim@bocoup.com"
@@ -9,7 +12,10 @@
     "body": "a bunch of HTML eric"
   },
   {
-    "from": "boaz@awesome.com",
+    "from": {
+      "name": "Boaz Sender",
+      "email": "boaz@bocoup.com"
+    },
     "cc": [
       "eirc@bocoup,com",
       "tim@bocoup.com"
@@ -18,7 +24,10 @@
     "body": "a bunch of HTML from boaz"
   },
   {
-    "from": "tim@awesome.com",
+    "from": {
+      "name": "Tim Branyen",
+      "email": "tim@awesome.com"
+    },
     "cc": [
       "eric@bocoup,com",
       "tim@bocoup.com"
