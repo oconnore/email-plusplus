@@ -9,7 +9,9 @@ require([
   "modules/email"
 ],
 
-function(namespace, jQuery, Backbone, Email) {
+function(epp, jQuery, Backbone, Email) {
+
+  var app = epp.app;
 
   // Defining the application router, you can attach sub routers here.
   var Router = Backbone.Router.extend({
@@ -23,16 +25,24 @@ function(namespace, jQuery, Backbone, Email) {
       
       emails.fetch().success(function(){
         var main = new Backbone.LayoutManager({
-          template: 'main'
+          template: 'main',
+          views: {
+            '#sidebar': new Email.Views.Sidebar()
+          }
         });
         
         emails.each(function(email) {
-          main.view("ul", new Email.Views.Sidebar({ model: email}), true);
-        })
+          main.views['#sidebar'].view("ul", new Email.Views.SidebarItem({ model: email}), true);
+        });
+        
+        app.bind('showbody', function( model){
+          var reader = main.view('#reader', new Email.Views.Reader({ model: model }));
+          reader.render();
+        });
         
         main.render(function( el ){
           $('#main').html( el );
-        })
+        });
         
       });
       
@@ -44,7 +54,7 @@ function(namespace, jQuery, Backbone, Email) {
   // point should be definitions.
   jQuery(function($) {
     // Shorthand the application namespace
-    var app = namespace.app;
+    var app = epp.app;
     
     // Define your master router on the application namespace and trigger all
     // navigation from this instance.
