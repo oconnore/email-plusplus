@@ -6,38 +6,48 @@ require([
   "use!backbone",
 
   // Modules
-  "modules/example"
+  "modules/email"
 ],
 
-function(namespace, jQuery, Backbone, Example) {
+function(epp, jQuery, Backbone, Email) {
+
+  var app = epp.app;
 
   // Defining the application router, you can attach sub routers here.
   var Router = Backbone.Router.extend({
     routes: {
-      "": "index",
-      ":hash": "index"
+      "": "index"
     },
 
-    index: function(hash) {
-      var route = this;
-      var tutorial = new Example.Views.Tutorial();
+    index: function() {
+      var emails = new Email.Collection();
+      window.emails = emails;
 
-      // Attach the tutorial to the DOM
-      tutorial.render(function(el) {
-        $("#main").html(el);
-
-        // Fix for hashes in pushState and hash fragment
-        if (hash && !route._alreadyTriggered) {
-          // Reset to home, pushState support automatically converts hashes
-          Backbone.history.navigate("", false);
-
-          // Trigger the default browser behavior
-          location.hash = hash;
-
-          // Set an internal flag to stop recursive looping
-          route._alreadyTriggered = true;
-        }
+      emails.fetch().success(function(){
+        var main = new Backbone.LayoutManager({
+          template: 'main',
+          views: {
+            '#sidebar': new Email.Views.Sidebar()
+          }
+        });
+        
+        emails.each(function(email) {
+          main.views['#sidebar'].view("ul", new Email.Views.SidebarItem({ model: email}), true);
+          
+        });
+        
+        app.bind('showbody', function( model){
+          var reader = main.view('#reader', new Email.Views.Reader({ model: model }));
+          reader.render();
+        });
+        
+        main.render(function( el ){
+          $('#main').html( el );
+        })
+        
       });
+      console.log(emails.models.length);
+      
     }
   });
 
@@ -46,7 +56,7 @@ function(namespace, jQuery, Backbone, Example) {
   // point should be definitions.
   jQuery(function($) {
     // Shorthand the application namespace
-    var app = namespace.app;
+    var app = epp.app;
     
     // Define your master router on the application namespace and trigger all
     // navigation from this instance.

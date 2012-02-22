@@ -14,30 +14,53 @@ function(epp, Backbone) {
   // Create a new module
   var Email = epp.module();
 
-  // Example extendings
-  Example.Model = Backbone.Model.extend({});
-  Example.Collection = Backbone.Collection.extend({
-	  url: '/assets/data/email.json'
+  var app = epp.app;
+
+  // Email extendings
+  Email.Model = Backbone.Model.extend({});
+  Email.Collection = Backbone.Collection.extend({
+    url: '/assets/data/email.json'
   });
-  Example.Router = Backbone.Router.extend({ /* ... */ });
 
-  // This will fetch the tutorial template and render it.
-  Example.Views.Tutorial = Backbone.View.extend({
-    template: "app/templates/example.html",
+  Email.Views.SidebarItem = Backbone.View.extend({
+    tagName: 'li',
+    className: 'btn',
+    template: 'email/sidebaritem',
+    events: {
+      "click": function(){
+        app.trigger('showbody', this.model);
+      }
+    },
+    serialize: function() {
+      return { email: this.model };
+      
+    }
+  });
 
-    render: function(done) {
-      var view = this;
+  Email.Views.Sidebar = Backbone.View.extend({
+    template: 'email/sidebar'
+  });
 
-      // Fetch the template, render it to the View element and call done.
-      namespace.fetchTemplate(this.template, function(tmpl) {
-        view.el.innerHTML = tmpl();
-
-        done(view.el);
-      });
+  Email.Views.Reader = Backbone.View.extend({
+    template: 'email/reader',
+    events: {
+      "click .reply": function(){
+        console.log( "reply" );
+      },
+      "click .replyall": function(){
+        console.log( "replyall" );
+      },
+      "click .fwd": function(){
+        console.log( "fwd" );
+      }
+    },
+    serialize: function() {
+      return { email: this.model };
+      
     }
   });
 
   // Required, return the module for AMD compliance
-  return Example;
+  return Email;
 
 });
