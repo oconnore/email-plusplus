@@ -25,6 +25,9 @@ require.config({
 
     underscore: {
       attach: "_"
+    },
+    "plugins/backbone.layoutmanager": {
+      deps: ["use!backbone"]
     }
   }
 });

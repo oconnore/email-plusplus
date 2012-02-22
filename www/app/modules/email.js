@@ -20,6 +20,14 @@ function(epp, Backbone) {
     url: '/assets/data/email.json'
   });
 
+  Email.Views.Sidebar = Backbone.View.extend({
+    template: 'email/sidebar',
+    serialize: function() {
+      return { email: this.model };
+      
+    }
+  })
+
   // Required, return the module for AMD compliance
   return Email;
 

@@ -21,8 +21,20 @@ function(namespace, jQuery, Backbone, Email) {
       var emails = new Email.Collection();
       window.emails = emails;
       
-      emails.fetch()
-      
+      emails.fetch().success(function(){
+        var main = new Backbone.LayoutManager({
+          template: 'main'
+        });
+        
+        emails.each(function(email) {
+          main.view("ul", new Email.Views.Sidebar({ model: email}), true);
+        })
+        
+        main.render(function( el ){
+          $('#main').html( el );
+        })
+        
+      });
       
     }
   });
