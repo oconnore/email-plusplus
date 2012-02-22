@@ -1,0 +1,29 @@
+[
+  {
+    "from": "eric@awesome.com",
+    "cc": [
+      "boaz@bocoup,com",
+      "tim@bocoup.com"
+    ],
+    "subject": "Mai email",
+    "body": "a bunch of HTML eric"
+  },
+  {
+    "from": "boaz@awesome.com",
+    "cc": [
+      "eirc@bocoup,com",
+      "tim@bocoup.com"
+    ],
+    "subject": "Mai email",
+    "body": "a bunch of HTML from boaz"
+  },
+  {
+    "from": "tim@awesome.com",
+    "cc": [
+      "eric@bocoup,com",
+      "tim@bocoup.com"
+    ],
+    "subject": "Mai email",
+    "body": "a bunch of HTML from tim"
+  }
+]
