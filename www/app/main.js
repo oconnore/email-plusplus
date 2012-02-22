@@ -6,38 +6,24 @@ require([
   "use!backbone",
 
   // Modules
-  "modules/example"
+  "modules/email"
 ],
 
-function(namespace, jQuery, Backbone, Example) {
+function(namespace, jQuery, Backbone, Email) {
 
   // Defining the application router, you can attach sub routers here.
   var Router = Backbone.Router.extend({
     routes: {
-      "": "index",
-      ":hash": "index"
+      "": "index"
     },
 
-    index: function(hash) {
-      var route = this;
-      var tutorial = new Example.Views.Tutorial();
-
-      // Attach the tutorial to the DOM
-      tutorial.render(function(el) {
-        $("#main").html(el);
-
-        // Fix for hashes in pushState and hash fragment
-        if (hash && !route._alreadyTriggered) {
-          // Reset to home, pushState support automatically converts hashes
-          Backbone.history.navigate("", false);
-
-          // Trigger the default browser behavior
-          location.hash = hash;
-
-          // Set an internal flag to stop recursive looping
-          route._alreadyTriggered = true;
-        }
-      });
+    index: function() {
+      var emails = new Email.Collection();
+      window.emails = emails;
+      
+      emails.fetch()
+      
+      
     }
   });
 
