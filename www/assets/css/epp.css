@@ -1,26 +1,31 @@
+nav {
+  position: fixed;
+  width: 100%;
+  padding: 5px;
+  background-color: #eee;
+}
 #sidebar {
   position: fixed;
   left: 0;
-  top: 0;
-  width: 180px;
+  top: 50px;
+  width: 20%;
   height: 500px;
   padding: 0px;
 }
-
+#sidebar li {
+  text-align: left;
+}
 #reader {
-  margin: 10px 0;
   position: absolute;
-  left: 200px;
-  top: 0;
+  left: 22%;
+  width: 50%;
+  top: 50px;
 }
 
 ul, li {
   list-style-type: none;
   margin: 0;
   padding: 0;
-
-
-
 }
 ul {
 
@@ -42,4 +47,17 @@ li {
 
 li:active {
   box-shadow: inset 0 0 1px #333;
+}
+
+.writer {
+  width: 100%;
+  height: 200px;
+  border: 1px solid #c2c2c2;
+}
+.btn-group {
+  margin: 10px 0;
+}
+
+input, textarea, select, .uneditable-input {
+  margin-bottom: 0;
 }

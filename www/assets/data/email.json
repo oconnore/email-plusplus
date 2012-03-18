@@ -4,6 +4,7 @@
       "name": "Eric O'conner",
       "email": "eric@awesome.com"
     },
+    "date": 1332112640409,
     "cc": [
       "boaz@bocoup,com",
       "tim@bocoup.com"
@@ -13,9 +14,19 @@
   },
   {
     "from": {
+      "name": "Eric O'conner",
+      "email": "eric@awesome.com"
+    },
+    "date": 1332112640409,
+    "subject": "Another email from Eric",
+    "body": "You should really read this dude!"
+  },
+  {
+    "from": {
       "name": "Boaz Sender",
       "email": "boaz@bocoup.com"
     },
+    "date": 1332112640409,
     "cc": [
       "eirc@bocoup,com",
       "tim@bocoup.com"
@@ -28,6 +39,7 @@
       "name": "Tim Branyen",
       "email": "tim@awesome.com"
     },
+    "date": 1332112640409,
     "cc": [
       "eric@bocoup,com",
       "tim@bocoup.com"

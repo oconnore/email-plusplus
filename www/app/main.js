@@ -16,7 +16,8 @@ function(epp, jQuery, Backbone, Email) {
   // Defining the application router, you can attach sub routers here.
   var Router = Backbone.Router.extend({
     routes: {
-      "": "index"
+      "": "index",
+      "compose": "compose"
     },
 
     index: function() {
@@ -30,7 +31,9 @@ function(epp, jQuery, Backbone, Email) {
             '#sidebar': new Email.Views.Sidebar()
           }
         });
-        
+
+        var nav = main.view('#mainnav', new Email.Views.Nav(), true);
+
         emails.each(function(email) {
           main.views['#sidebar'].view("ul", new Email.Views.SidebarItem({ model: email}), true);
           
@@ -40,15 +43,24 @@ function(epp, jQuery, Backbone, Email) {
           var reader = main.view('#reader', new Email.Views.Reader({ model: model }));
           reader.render();
         });
-        
+
+        app.bind('showwriter', function( model){
+          var writer = main.view('#reader', new Email.Views.Writer({ model: model }));
+          writer.render();
+        });
+
         main.render(function( el ){
           $('#main').html( el );
         })
         
       });
-      console.log(emails.models.length);
-      
+    },
+    compose: function() {
+      epp.app.router.index();
+      var writer = new Email.Views.Writer();
+      writer.render();
     }
+    
   });
 
   // Treat the jQuery ready function as the entry point to the application.

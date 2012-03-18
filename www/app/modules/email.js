@@ -22,6 +22,15 @@ function(epp, Backbone) {
     url: '/assets/data/email.json'
   });
 
+  Email.Views.Nav = Backbone.View.extend({
+    template: 'email/nav',
+    events: {
+      "click .compose": function(){
+        app.trigger('showwriter', this.model);
+      }
+    }
+  });
+
   Email.Views.SidebarItem = Backbone.View.extend({
     tagName: 'li',
     className: 'btn',
@@ -58,6 +67,10 @@ function(epp, Backbone) {
       return { email: this.model };
       
     }
+  });
+
+  Email.Views.Writer = Backbone.View.extend({
+    template: 'email/writer'
   });
 
   // Required, return the module for AMD compliance
