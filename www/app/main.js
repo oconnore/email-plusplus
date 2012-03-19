@@ -21,16 +21,18 @@ function(epp, jQuery, Backbone, Email) {
     },
 
     index: function() {
-      var emails = new Email.DateCollection();
+      var emails = new Email.Collection();
       window.emails = emails;
       
       emails.fetch().success(function(){
         var main = new Backbone.LayoutManager({
           template: 'main',
           views: {
-            '#sidebar': new Email.Views.Sidebar()
+            '#sidebar': new Email.Views.Sidebar({ model: emails })
           }
         });
+
+        window.main = main;
         
         // Render the navigation
         var nav = main.view('#mainnav', new Email.Views.Nav(), true);
@@ -45,8 +47,8 @@ function(epp, jQuery, Backbone, Email) {
             senders.add({
               id: email.get('fromemail'),
               name: email.get('fromname'),
-              read: new Email.DateCollection(),
-              unread: new Email.DateCollection()
+              read: new Email.Collection(),
+              unread: new Email.Collection()
             });
 
             // if the current email is unread, create a new unread collection for it
@@ -67,11 +69,19 @@ function(epp, jQuery, Backbone, Email) {
             }
           }
         });
-        
+
         senders.each(function( sender ){
           main.views['#sidebar'].view("#sidebarlist", new Email.Views.SidebarItemSender({ model: sender}), true);
         });
-        
+
+        // not working: 
+        app.bind('sortbydate', function( emails ){
+          emails.each(function( email ){
+            main.views['#sidebar'].view("#sidebarlist", new Email.Views.SidebarItemDate({ model: email}), true);
+          });
+        });
+
+
         app.bind('showbody', function( model){
           var reader = main.view('#reader', new Email.Views.Reader({ model: model }));
           reader.render();
@@ -79,8 +89,11 @@ function(epp, jQuery, Backbone, Email) {
 
         app.bind('showsendermail', function( model ){
           model.get('unread').each(function( email ){
-            var sidebarItem = main.view('#' + model.cid, new Email.Views.SidebarItem({ model: email }));
-            sidebarItem.render();
+            main
+              .views['#sidebar']
+              .view('#sidebarlist #' + model.cid, new Email.Views.SidebarItem({ model: email }))
+              .render();
+
           });
         });
 
