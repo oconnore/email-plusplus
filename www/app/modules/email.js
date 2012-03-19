@@ -36,18 +36,31 @@ function(epp, Backbone) {
     }
   });
 
-  Email.Views.SidebarItemSender = Backbone.View.extend({
+  Email.Views.SidebarItems = Backbone.View.extend({
     tagName: 'li',
     className: 'btn',
-    template: 'email/sidebaritem-sender',
+    template: 'email/sidebaritem',
     events: {
       "click": function(){
         app.trigger('showbody', this.model);
       }
     },
     serialize: function() {
+      return { email: this.model };
+    }
+  });
+
+  Email.Views.SidebarItemSender = Backbone.View.extend({
+    tagName: 'li',
+    className: 'btn',
+    template: 'email/sidebaritem-sender',
+    events: {
+      "click": function(){
+        app.trigger('showsendermail', this.model);
+      }
+    },
+    serialize: function() {
       return { sender: this.model };
-      
     }
   });
 
