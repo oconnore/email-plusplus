@@ -1,3 +1,8 @@
-<b><%= sender.get('name') %></b> <span class="count"><%= sender.get('unread').length %></span> <i class="fine">(<%= sender.get('unread').length + sender.get('read').length %> total)</i>
+<b><%= sender.get('name') %></b>
+<span class="select"><input type="checkbox"></span>
+<span class="meta right">
+  <span class="count"><%= sender.get('unread').length %></span>
+  <i class="fine">(<%= sender.get('unread').length + sender.get('read').length %> total)</i>
+</span>
 <ul id="<%= sender.cid %>">
 </ul>

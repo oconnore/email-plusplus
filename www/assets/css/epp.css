@@ -26,8 +26,15 @@
 #sidebar label {
   font-weight: bold;
   margin: 15px 5px;
-  display: inline-block;
+  display: inline;
   vertical-align: top;
+}
+#sidebar input {
+  display: inline;
+}
+#sidebar .select {
+  float: right;
+  margin: 0 0 0 5px;
 }
 #sidebar .btn-group {
   display: inline-block;
@@ -37,7 +44,7 @@
 }
 #reader {
   position: absolute;
-  left: 340px;
+  left: 360px;
   width: 668px;
   top: 50px;
 }
@@ -48,7 +55,7 @@ ul, li {
   padding: 0;
 }
 ul {
-
+/*
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   border-radius: 4px;
@@ -60,6 +67,7 @@ ul {
   filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
   border: 1px solid #CCC;
   border-bottom-color: #BBB;
+*/
 }
 li {
   width: 100%;
@@ -91,4 +99,8 @@ input, textarea, select, .uneditable-input {
 }
 .fine {
 	font-size: 10px;
+}
+
+.right {
+  float: right
 }
