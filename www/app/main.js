@@ -21,8 +21,9 @@ function(epp, jQuery, Backbone, Email) {
     },
 
     index: function() {
-      var emails = new Email.Collection();
+      var emails = new Email.DateCollection();
       window.emails = emails;
+      
 
       emails.fetch().success(function(){
         var main = new Backbone.LayoutManager({
@@ -34,10 +35,42 @@ function(epp, jQuery, Backbone, Email) {
 
         var nav = main.view('#mainnav', new Email.Views.Nav(), true);
 
-        emails.each(function(email) {
-          main.views['#sidebar'].view("ul", new Email.Views.SidebarItem({ model: email}), true);
-          
+        // Organize a new collection of emails according to sender
+        var senders = new Email.SenderCollection();
+        window.senders = senders;
+        // Iterate over all the emails 
+        emails.each(function( email ){
+          // If we haven't put this sender in the senders collection, do it
+          if( !senders.get(email.get('fromemail')) ){
+            senders.add({
+              id: email.get('fromemail'),
+              name: email.get('fromname'),
+			  read: new Email.DateCollection(),
+			  unread: new Email.DateCollection()
+            });
+
+            // if the current email is unread, create a new unread collection for it
+            if( !email.get('read') ){
+              senders.get( email.get('fromemail') ).get( 'unread' ).add( email )
+            // otherwise, create a new read collection for it
+            } else {
+              senders.get( email.get('fromemail') ).get( 'read' ).add( email )
+            }
+          // if we have already pyt this sender in the senders collection
+          } else {
+            // if the email is unread add it to the unread collection
+            if( !email.get('read') ){
+              senders.get( email.get('fromemail') ).get('unread').add( email );
+            // if the email is unread add it to the read collection
+            } else {
+              senders.get( email.get('fromemail') ).get('read').add( email );
+            }
+          }
         });
+        
+        senders.each(function( sender ){
+          main.views['#sidebar'].view("ul", new Email.Views.SidebarItemSender({ model: sender}), true);
+        })
         
         app.bind('showbody', function( model){
           var reader = main.view('#reader', new Email.Views.Reader({ model: model }));

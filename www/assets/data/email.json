@@ -1,10 +1,9 @@
 [
   {
-    "from": {
-      "name": "Eric O'conner",
-      "email": "eric@awesome.com"
-    },
+    "fromname": "Eric O'conner",
+    "fromemail": "eric@awesome.com",
     "date": 1332112640409,
+    "read": 0,
     "cc": [
       "boaz@bocoup,com",
       "tim@bocoup.com"
@@ -13,20 +12,26 @@
     "body": "a bunch of HTML eric"
   },
   {
-    "from": {
-      "name": "Eric O'conner",
-      "email": "eric@awesome.com"
-    },
+    "fromname": "Eric O'conner",
+    "fromemail": "eric@awesome.com",
     "date": 1332112640409,
+    "read": 0,
     "subject": "Another email from Eric",
     "body": "You should really read this dude!"
   },
   {
-    "from": {
-      "name": "Boaz Sender",
-      "email": "boaz@bocoup.com"
-    },
+    "fromname": "Eric O'conner",
+    "fromemail": "eric@awesome.com",
+    "date": 1332114724789,
+    "read": 0,
+    "subject": "I'm getting sick of this!",
+    "body": "DUDE! Why do I have to email you so many times"
+  },
+  {
+    "fromname": "Boaz Sender",
+    "fromemail": "boaz@bocoup.com",
     "date": 1332112640409,
+    "read": 0,
     "cc": [
       "eirc@bocoup,com",
       "tim@bocoup.com"
@@ -35,16 +40,31 @@
     "body": "a bunch of HTML from boaz"
   },
   {
-    "from": {
-      "name": "Tim Branyen",
-      "email": "tim@awesome.com"
-    },
+    "fromname": "Rick Waldron",
+    "fromemail": "rick@bocoup.com",
+    "date": 1332114734789,
+    "read": 0,
+    "subject": "UNIT TESTS BRO",
+    "body": "You need to write more unit tests for Email ++"
+  },
+  {
+    "fromname": "Tim Branyen",
+    "fromemail": "tim@awesome.com",
     "date": 1332112640409,
+    "read": 0,
     "cc": [
       "eric@bocoup,com",
       "tim@bocoup.com"
     ],
     "subject": "Mai email",
     "body": "a bunch of HTML from tim"
+  },
+  {
+    "fromname": "Rick Waldron",
+    "fromemail": "rick@bocoup.com",
+    "date": 1332114764589,
+    "read": 1,
+    "subject": "INCONSISTANT WHITE SPACE",
+    "body": "Are you messing with me on purpose?"
   }
 ]

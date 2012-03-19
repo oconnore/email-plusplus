@@ -18,9 +18,14 @@ function(epp, Backbone) {
 
   // Email extendings
   Email.Model = Backbone.Model.extend({});
-  Email.Collection = Backbone.Collection.extend({
-    url: '/assets/data/email.json'
+  Email.DateCollection = Backbone.Collection.extend({
+    url: '/assets/data/email.json',
+    comparator: function(chapter) {
+      return chapter.get("date");
+    }
   });
+
+  Email.SenderCollection = Backbone.Collection.extend({});
 
   Email.Views.Nav = Backbone.View.extend({
     template: 'email/nav',
@@ -31,17 +36,17 @@ function(epp, Backbone) {
     }
   });
 
-  Email.Views.SidebarItem = Backbone.View.extend({
+  Email.Views.SidebarItemSender = Backbone.View.extend({
     tagName: 'li',
     className: 'btn',
-    template: 'email/sidebaritem',
+    template: 'email/sidebaritem-sender',
     events: {
       "click": function(){
         app.trigger('showbody', this.model);
       }
     },
     serialize: function() {
-      return { email: this.model };
+      return { sender: this.model };
       
     }
   });

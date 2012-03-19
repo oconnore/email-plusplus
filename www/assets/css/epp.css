@@ -1,24 +1,44 @@
-nav {
+#mainnav {
   position: fixed;
   width: 100%;
   padding: 5px;
   background-color: #eee;
 }
+#mainnav a {
+  color: #000;
+  font-size: 12px;
+  font-weight: bold;
+  margin-right: 269px;
+}
+#mainnav .settings {
+  margin-right: 10px;
+  float: right;
+  padding: 3px 6px;
+}
+
 #sidebar {
   position: fixed;
   left: 0;
   top: 50px;
-  width: 20%;
-  height: 500px;
+  width: 319px;
   padding: 0px;
+}
+#sidebar label {
+  font-weight: bold;
+  margin: 15px 5px;
+  display: inline-block;
+  vertical-align: top;
+}
+#sidebar .btn-group {
+  display: inline-block;
 }
 #sidebar li {
   text-align: left;
 }
 #reader {
   position: absolute;
-  left: 22%;
-  width: 50%;
+  left: 340px;
+  width: 668px;
   top: 50px;
 }
 
@@ -60,4 +80,12 @@ li:active {
 
 input, textarea, select, .uneditable-input {
   margin-bottom: 0;
+}
+
+.count {
+  background: #DA4F49;
+  border-radius: 62px;
+  color: white;
+  padding: 3px 7px 5px 7px;
+  font-size: 10px;
 }
