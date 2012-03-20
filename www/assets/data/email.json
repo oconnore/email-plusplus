@@ -14,15 +14,15 @@
   {
     "fromname": "Eric O'conner",
     "fromemail": "eric@awesome.com",
-    "date": 1332112640409,
-    "read": 0,
+    "date": 1330102440409,
+    "read": 1,
     "subject": "Another email from Eric",
     "body": "You should really read this dude!"
   },
   {
     "fromname": "Eric O'conner",
     "fromemail": "eric@awesome.com",
-    "date": 1332114724789,
+    "date": 1332314724789,
     "read": 0,
     "subject": "I'm getting sick of this!",
     "body": "DUDE! Why do I have to email you so many times"
@@ -30,7 +30,7 @@
   {
     "fromname": "Boaz Sender",
     "fromemail": "boaz@bocoup.com",
-    "date": 1332112640409,
+    "date": 1332142240009,
     "read": 0,
     "cc": [
       "eirc@bocoup,com",
@@ -42,7 +42,7 @@
   {
     "fromname": "Rick Waldron",
     "fromemail": "rick@bocoup.com",
-    "date": 1332114734789,
+    "date": 1332374734789,
     "read": 0,
     "subject": "UNIT TESTS BRO",
     "body": "You need to write more unit tests for Email++"

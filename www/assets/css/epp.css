@@ -25,9 +25,10 @@
 }
 #sidebar label {
   font-weight: bold;
-  margin: 15px 5px;
-  display: inline;
-  vertical-align: top;
+  margin: -44px 5px 0 5px;
+  display: inline-block;
+  line-height: 1;
+  vertical-align: middle;
 }
 #sidebar input {
   display: inline;
@@ -42,7 +43,7 @@
 #sidebar li {
   text-align: left;
 }
-#sidebar .sublist span {
+#sidebar .sublist li {
   display: block;
   margin: 0px 10px;
   padding: 5px 0;
@@ -50,8 +51,11 @@
   cursor: pointer;
   border-bottom: 1px solid #888;
 }
-#sidebar .sublist span:last-child {
+#sidebar .sublist li:last-child {
   border-bottom: none;
+}
+#sidebar {
+  margin: 0 26px 0 6px
 }
 #reader {
   position: absolute;
@@ -114,4 +118,8 @@ input, textarea, select, .uneditable-input {
 
 .right {
   float: right
+}
+
+.unread {
+  font-weight: bold;
 }

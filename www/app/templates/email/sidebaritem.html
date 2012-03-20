@@ -1,2 +1,4 @@
-<%= new Date( model.get('date') ).toUTCString().substr(4, 7) %>
-"<%= model.get('body').substr(0, 35) %> ..."
+<span class="<%= model.get('read') ? 'read' : 'unread' %>">
+  <em><%= new Date( model.get('date') ).toUTCString().substr(4, 7) %></em> &rarr;
+  "<%= model.get('body').substr(0, 25) %> ..."
+</span>

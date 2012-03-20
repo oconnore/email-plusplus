@@ -22,8 +22,11 @@ function(epp, jQuery, Backbone, Email) {
 
     index: function() {
       var emails = new Email.Collection();
+      var unreadEmails = new Email.Collection();
       window.emails = emails;
-      
+      window.Email = Email;
+      Email.collections = {};
+
       emails.fetch().success(function(){
         var main = new Backbone.LayoutManager({
           template: 'main',
@@ -40,6 +43,8 @@ function(epp, jQuery, Backbone, Email) {
         // Organize a new collection of emails according to sender
         var senders = new Email.SenderCollection();
         window.senders = senders;
+        
+        
         // Iterate over all the emails 
         emails.each(function( email ){
           // If we haven't put this sender in the senders collection, do it
@@ -47,6 +52,7 @@ function(epp, jQuery, Backbone, Email) {
             senders.add({
               id: email.get('fromemail'),
               name: email.get('fromname'),
+              allMail: new Email.Collection(),
               read: new Email.Collection(),
               unread: new Email.Collection()
             });
@@ -54,47 +60,83 @@ function(epp, jQuery, Backbone, Email) {
             // if the current email is unread, create a new unread collection for it
             if( !email.get('read') ){
               senders.get( email.get('fromemail') ).get( 'unread' ).add( email );
+              senders.get( email.get('fromemail') ).get( 'allMail' ).add( email );
+              unreadEmails.add( email );
             // otherwise, create a new read collection for it
             } else {
               senders.get( email.get('fromemail') ).get( 'read' ).add( email );
+              senders.get( email.get('fromemail') ).get( 'allMail' ).add( email );
             }
           // if we have already pyt this sender in the senders collection
           } else {
             // if the email is unread add it to the unread collection
             if( !email.get('read') ){
               senders.get( email.get('fromemail') ).get('unread').add( email );
+              senders.get( email.get('fromemail') ).get( 'allMail' ).add( email );
+              unreadEmails.add( email );
             // if the email is unread add it to the read collection
             } else {
               senders.get( email.get('fromemail') ).get('read').add( email );
+              senders.get( email.get('fromemail') ).get( 'allMail' ).add( email );
             }
           }
+
+          Email.collections['senders'] = senders;
+          Email.collections['emails'] = emails;
+          Email.collections['unreadEmails'] = unreadEmails;
+
         });
 
-        var sendersList = new Email.Views.SidebarList({ collection: senders });
-        sendersList.modelTemplate = 'email/sidebaritem-sender';
-        sendersList.clickEvent = 'showsendermail';
-        main.views['#sidebar'].view( "#sidebarlist", sendersList );
+        app.bind('sortbysender', function( senders ){
+          var sendersList = new Email.Views.SidebarList({ collection: senders.collection });
+          sendersList.modelTemplate = 'email/sidebaritem-sender';
+          sendersList.clickEvent = 'showsendermail';
+          var layoutSendersList = main.views['#sidebar'].view( "#sidebarlist", sendersList);
+          if( senders.render ){
+            layoutSendersList.render();
+          }
 
+          $('nav.btn-group')
+            .children().removeClass('active')
+            .end()
+            .children('.sender').addClass('active')
+        });
+          
         app.bind('showsendermail', function( sender ){
           
-          var emailListUnread = new Email.Views.SidebarList({ collection: sender.get('unread') });
-          emailListUnread.modelTemplate = 'email/sidebaritem';
-          emailListUnread.clickEvent = 'showbody';
+          var emailListUnread = new Email.Views.SidebarList({ collection: sender.get('allMail') });
+          var as1 = main.views['#sidebar'].views['#sidebarlist'].view( '#' + sender.cid, emailListUnread).render();
 
-          main.views['#sidebar'].views['#sidebarlist'].view( '#' + sender.cid, emailListUnread ).render();
+        });
 
-          var emailListRead = new Email.Views.SidebarList({ collection: sender.get('read') });
-          emailListRead.modelTemplate = 'email/sidebaritem';
-          emailListRead.clickEvent = 'showbody';
+        app.bind('sortbyunread', function( emails ){
+          
+          var emailList = new Email.Views.SidebarList({ collection: emails.collection });
+          emailList.className = 'btn';
+          main.views['#sidebar'].view( '#sidebarlist', emailList ).render();
 
-          main.views['#sidebar'].views['#sidebarlist'].view( '#' + sender.cid, emailListRead ).render();
-
+          $('nav.btn-group')
+            .children().removeClass('active')
+            .end()
+            .children('.unread').addClass('active')
         });
 
         app.bind('sortbydate', function( emails ){
-          emails.each(function( email ){
-            main.views['#sidebar'].view("#sidebarlist", new Email.Views.SidebarItemDate({ model: email}), true);
-          });
+          var emailList = new Email.Views.SidebarList({ collection: emails.collection });
+          emailList.className = 'btn';
+          main.views['#sidebar'].view( '#sidebarlist', emailList ).render();
+          
+          $('nav.btn-group')
+            .children().removeClass('active')
+            .end()
+            .children('.date').addClass('active')
+        });
+
+        app.bind('sortbysent', function( emails ){
+          $('nav.btn-group')
+            .children().removeClass('active')
+            .end()
+            .children('.sent').addClass('active')
         });
 
         app.bind('showbody', function( model){
@@ -107,9 +149,14 @@ function(epp, jQuery, Backbone, Email) {
           writer.render();
         });
 
+        // Render the main emails layout manager
         main.render(function( el ){
           $('#main').html( el );
         });
+
+        // Render the Senders list by default
+        app.trigger('sortbysender', { collection: senders, render: false });
+
         
       });
     },

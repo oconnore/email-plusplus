@@ -20,8 +20,12 @@ function(epp, Backbone) {
   Email.Model = Backbone.Model.extend({});
   Email.Collection = Backbone.Collection.extend({
     url: '/assets/data/email.json',
-    comparator: function(chapter) {
-      return chapter.get("date");
+    comparator: function( email ) {
+      if( email.get('read') ) {
+        return 1
+      } else {
+        return -email.get("date");
+      }
     }
   });
 
@@ -41,9 +45,11 @@ function(epp, Backbone) {
     render: function( manage ){
       var view = manage(this);
       var that = this;
-
       this.collection.each(function( model ) {
-        var itemView = new Email.Views.SidebarItem({ model: model });
+        var itemView = new Email.Views.SidebarItem({ 
+          className: that.className || '',
+          model: model
+        });
         itemView.template = that.modelTemplate || 'email/sidebaritem';
         itemView.clickEvent = that.clickEvent || 'showbody';
         view.insert( '.list', itemView, true );
@@ -54,7 +60,7 @@ function(epp, Backbone) {
   });
 
   Email.Views.SidebarItem = Backbone.View.extend({
-    tagName: 'span',
+    tagName: 'li',
     template: 'email/sidebaritem',
     events: {
       "click": function(){
@@ -70,16 +76,16 @@ function(epp, Backbone) {
     template: 'email/sidebar',
     events: {
       "click .sender": function(){
-        app.trigger('sortbysender', this.model);
+        app.trigger('sortbysender', { collection: Email.collections.senders, render: true });
       },
       "click .unread": function(){
-        app.trigger('sortbyunread', this.model);
+        app.trigger('sortbyunread', { collection: Email.collections.unreadEmails, render: true });
       },
       "click .date": function(){
-        app.trigger('sortbydate', this.model);
+        app.trigger('sortbydate', { collection: Email.collections.emails, render: true });
       },
       "click .sent": function(){
-        app.trigger('sortbysent', this.model);
+        app.trigger('sortbysent', { collection: Email.collections.sentEmails, render: true });
       },
       serialize: function() {
         return { emails: this.model };
