@@ -5,8 +5,9 @@
     <a class="btn fwd">fwd</a>
   </div>
   <h3>From: <%= email.get('fromname') %></h3>
-  <h4>CC: <%= email.get('cc') %></h4>
-  <p>Subject: <%= email.get('subject') %></p>
+  <%= email.get('cc') ? '<h4>CC: ' + email.get('cc').join(', ') + '</h4>': '' %>
+  <h5>Subject: <%= email.get('subject') %></h5>
+  <hr>
   <p>
     <%= email.get('body') %>
   </p>

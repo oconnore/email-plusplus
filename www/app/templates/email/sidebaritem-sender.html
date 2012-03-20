@@ -2,7 +2,7 @@
   <b><%= model.get('name') %></b>
   <span class="select"><input type="checkbox"></span>
   <span class="meta right">
-  <span class="count"><%= model.get('unread').length %></span>
+  <%= model.get('unread').length ? '<span class="count">' + model.get('unread').length + '</span>' : '' %>
   <i class="fine">(<%= model.get('unread').length + model.get('read').length %> total)</i>
   </span>
 </li>

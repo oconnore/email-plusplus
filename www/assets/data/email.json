@@ -5,7 +5,7 @@
     "date": 1332112640409,
     "read": 0,
     "cc": [
-      "boaz@bocoup,com",
+      "boaz@bocoup.com",
       "tim@bocoup.com"
     ],
     "subject": "Mai email",
@@ -14,7 +14,7 @@
   {
     "fromname": "Eric O'conner",
     "fromemail": "eric@awesome.com",
-    "date": 1330102440409,
+    "date": 1330402440409,
     "read": 1,
     "subject": "Another email from Eric",
     "body": "You should really read this dude!"
@@ -33,7 +33,7 @@
     "date": 1332142240009,
     "read": 0,
     "cc": [
-      "eirc@bocoup,com",
+      "eirc@bocoup.com",
       "tim@bocoup.com"
     ],
     "subject": "Mai email",
@@ -42,7 +42,7 @@
   {
     "fromname": "Rick Waldron",
     "fromemail": "rick@bocoup.com",
-    "date": 1332374734789,
+    "date": 132314734789,
     "read": 0,
     "subject": "UNIT TESTS BRO",
     "body": "You need to write more unit tests for Email++"
@@ -53,7 +53,7 @@
     "date": 1332112640409,
     "read": 0,
     "cc": [
-      "eric@bocoup,com",
+      "eric@bocoup.com",
       "tim@bocoup.com"
     ],
     "subject": "Mai email",
@@ -66,5 +66,13 @@
     "read": 1,
     "subject": "INCONSISTANT WHITE SPACE",
     "body": "Are you messing with me on purpose?"
+  },
+  {
+    "fromname": "Dan Heberden",
+    "fromemail": "dan@bocoup.com",
+    "date": 1330114764589,
+    "read": 1,
+    "subject": "Can I send you a package?",
+    "body": "Is it ok to send a package to the office?"
   }
 ]

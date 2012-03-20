@@ -25,6 +25,7 @@ function(epp, jQuery, Backbone, Email) {
       var unreadEmails = new Email.Collection();
       window.emails = emails;
       window.Email = Email;
+      window.unreadEmails = unreadEmails;
       Email.collections = {};
 
       emails.fetch().success(function(){
@@ -103,14 +104,11 @@ function(epp, jQuery, Backbone, Email) {
         });
           
         app.bind('showsendermail', function( sender ){
-          
           var emailListUnread = new Email.Views.SidebarList({ collection: sender.get('allMail') });
           var as1 = main.views['#sidebar'].views['#sidebarlist'].view( '#' + sender.cid, emailListUnread).render();
-
         });
 
         app.bind('sortbyunread', function( emails ){
-          
           var emailList = new Email.Views.SidebarList({ collection: emails.collection });
           emailList.className = 'btn';
           main.views['#sidebar'].view( '#sidebarlist', emailList ).render();
@@ -146,7 +144,9 @@ function(epp, jQuery, Backbone, Email) {
 
         app.bind('showwriter', function( model){
           var writer = main.view('#reader', new Email.Views.Writer({ model: model }));
-          writer.render();
+          writer.render(function(){
+            $('.writer').focus()
+          });
         });
 
         // Render the main emails layout manager
@@ -156,8 +156,6 @@ function(epp, jQuery, Backbone, Email) {
 
         // Render the Senders list by default
         app.trigger('sortbysender', { collection: senders, render: false });
-
-        
       });
     },
     compose: function() {

@@ -1,4 +1,4 @@
-<span class="<%= model.get('read') ? 'read' : 'unread' %>">
+<span data-email-id="<%= model.cid %>" class="<%= model.get('read') ? 'read-msg' : 'unread-msg' %>">
   <em><%= new Date( model.get('date') ).toUTCString().substr(4, 7) %></em> &rarr;
   "<%= model.get('body').substr(0, 25) %> ..."
 </span>

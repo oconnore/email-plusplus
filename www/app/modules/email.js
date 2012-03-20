@@ -21,11 +21,7 @@ function(epp, Backbone) {
   Email.Collection = Backbone.Collection.extend({
     url: '/assets/data/email.json',
     comparator: function( email ) {
-      if( email.get('read') ) {
-        return 1
-      } else {
-        return -email.get("date");
-      }
+      return -email.get("date");
     }
   });
 
@@ -65,6 +61,13 @@ function(epp, Backbone) {
     events: {
       "click": function(){
         app.trigger(this.clickEvent || 'showbody', this.model);
+      },
+      "click .unread-msg": function( e ){
+        e.stopPropagation();
+        Email.collections.unreadEmails.remove( e.target.dataset.emailId )
+        Email.collections.emails.getByCid( e.target.dataset.emailId ).set({ read: 1 });
+        $(e.target).removeClass('unread-msg');
+        app.trigger(this.clickEvent || 'showbody', this.model);
       }
     },
     serialize: function() {
@@ -94,11 +97,6 @@ function(epp, Backbone) {
     }
   });
 
-  Email.Views.EmailList = Backbone.View.extend({
-    tagName: 'ul',
-    template: 'email/emaillist'
-  });
-
   Email.Views.Reader = Backbone.View.extend({
     template: 'email/reader',
     events: {
@@ -119,7 +117,21 @@ function(epp, Backbone) {
   });
 
   Email.Views.Writer = Backbone.View.extend({
-    template: 'email/writer'
+    template: 'email/writer',
+    events: {
+      'focus .writer': function( e ){
+        $('#sidebar, #mainnav, .writer-container .btn, .writer-container input')
+          .animate({
+            opacity: .04
+          }, 300);
+      },
+      'blur .writer': function( e ){
+        $('#sidebar, #mainnav, .writer-container .btn, .writer-container input')
+          .animate({
+            opacity: 1
+          }, 300);
+      }
+    }
   });
 
   // Required, return the module for AMD compliance
