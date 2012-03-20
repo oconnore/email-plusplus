@@ -1,4 +1,4 @@
-<li class="btn">
+<li class="btn<%= model.get('unread').length ? ' unread-msgs' : '' %>">
   <b><%= model.get('name') %></b>
   <span class="select"><input type="checkbox"></span>
   <span class="meta right">

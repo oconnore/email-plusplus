@@ -63,9 +63,12 @@ function(epp, Backbone) {
         app.trigger(this.clickEvent || 'showbody', this.model);
       },
       "click .unread-msg": function( e ){
-        e.stopPropagation();
         Email.collections.unreadEmails.remove( e.target.dataset.emailId )
         Email.collections.emails.getByCid( e.target.dataset.emailId ).set({ read: 1 });
+        var readmail = Email.collections.senders.get( e.target.dataset.fromemail ).get('unread').getByCid( e.target.dataset.emailId );
+        Email.collections.senders.get( e.target.dataset.fromemail ).get('unread').remove( e.target.dataset.emailId );
+        Email.collections.senders.get( e.target.dataset.fromemail ).get('read').add( readmail );
+
         $(e.target).removeClass('unread-msg');
         app.trigger(this.clickEvent || 'showbody', this.model);
       }

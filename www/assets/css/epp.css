@@ -112,7 +112,12 @@ input, textarea, select, .uneditable-input {
   color: white;
   padding: 3px 7px 5px 7px;
   font-size: 10px;
+  display: none;
 }
+.unread-msgs .count{
+  display: inline;
+}
+
 .fine {
   font-size: 10px;
 }
