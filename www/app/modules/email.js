@@ -36,45 +36,33 @@ function(epp, Backbone) {
     }
   });
 
+  Email.Views.SidebarList= Backbone.View.extend({
+    template: 'email/list',
+    render: function( manage ){
+      var view = manage(this);
+      var that = this;
+
+      this.collection.each(function( model ) {
+        var itemView = new Email.Views.SidebarItem({ model: model });
+        itemView.template = that.modelTemplate || 'email/sidebaritem';
+        itemView.clickEvent = that.clickEvent || 'showbody';
+        view.insert( '.list', itemView, true );
+      });
+
+      return view.render();
+    }
+  });
+
   Email.Views.SidebarItem = Backbone.View.extend({
-    tagName: 'ul',
-    className: 'btn',
+    tagName: 'span',
     template: 'email/sidebaritem',
     events: {
       "click": function(){
-        app.trigger('showbody', this.model);
+        app.trigger(this.clickEvent || 'showbody', this.model);
       }
     },
     serialize: function() {
-      return { email: this.model };
-    }
-  });
-
-  Email.Views.SidebarItemSender = Backbone.View.extend({
-    tagName: 'li',
-    className: 'btn',
-    template: 'email/sidebaritem-sender',
-    events: {
-      "click": function(){
-        app.trigger('showsendermail', this.model);
-      }
-    },
-    serialize: function() {
-      return { sender: this.model };
-    }
-  });
-
-  Email.Views.SidebarItemDate = Backbone.View.extend({
-    tagName: 'li',
-    className: 'btn',
-    template: 'email/sidebaritem',
-    events: {
-      "click": function(){
-        app.trigger('showbody', this.model);
-      }
-    },
-    serialize: function() {
-      return { email: this.model };
+      return { model: this.model };
     }
   });
 

@@ -42,6 +42,17 @@
 #sidebar li {
   text-align: left;
 }
+#sidebar .sublist span {
+  display: block;
+  margin: 0px 10px;
+  padding: 5px 0;
+  width: 100%;
+  cursor: pointer;
+  border-bottom: 1px solid #888;
+}
+#sidebar .sublist span:last-child {
+  border-bottom: none;
+}
 #reader {
   position: absolute;
   left: 360px;
@@ -98,7 +109,7 @@ input, textarea, select, .uneditable-input {
   font-size: 10px;
 }
 .fine {
-	font-size: 10px;
+  font-size: 10px;
 }
 
 .right {

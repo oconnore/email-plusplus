@@ -3,6 +3,7 @@ define([
   "jquery",
   "use!underscore",
   "use!backbone",
+  "date",
   "use!plugins/backbone.layoutmanager"
 ],
 

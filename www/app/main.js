@@ -70,31 +70,36 @@ function(epp, jQuery, Backbone, Email) {
           }
         });
 
-        senders.each(function( sender ){
-          main.views['#sidebar'].view("#sidebarlist", new Email.Views.SidebarItemSender({ model: sender}), true);
+        var sendersList = new Email.Views.SidebarList({ collection: senders });
+        sendersList.modelTemplate = 'email/sidebaritem-sender';
+        sendersList.clickEvent = 'showsendermail';
+        main.views['#sidebar'].view( "#sidebarlist", sendersList );
+
+        app.bind('showsendermail', function( sender ){
+          
+          var emailListUnread = new Email.Views.SidebarList({ collection: sender.get('unread') });
+          emailListUnread.modelTemplate = 'email/sidebaritem';
+          emailListUnread.clickEvent = 'showbody';
+
+          main.views['#sidebar'].views['#sidebarlist'].view( '#' + sender.cid, emailListUnread ).render();
+
+          var emailListRead = new Email.Views.SidebarList({ collection: sender.get('read') });
+          emailListRead.modelTemplate = 'email/sidebaritem';
+          emailListRead.clickEvent = 'showbody';
+
+          main.views['#sidebar'].views['#sidebarlist'].view( '#' + sender.cid, emailListRead ).render();
+
         });
 
-        // not working: 
         app.bind('sortbydate', function( emails ){
           emails.each(function( email ){
             main.views['#sidebar'].view("#sidebarlist", new Email.Views.SidebarItemDate({ model: email}), true);
           });
         });
 
-
         app.bind('showbody', function( model){
           var reader = main.view('#reader', new Email.Views.Reader({ model: model }));
           reader.render();
-        });
-
-        app.bind('showsendermail', function( model ){
-          model.get('unread').each(function( email ){
-            main
-              .views['#sidebar']
-              .view('#sidebarlist #' + model.cid, new Email.Views.SidebarItem({ model: email }))
-              .render();
-
-          });
         });
 
         app.bind('showwriter', function( model){

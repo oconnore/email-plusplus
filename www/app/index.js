@@ -12,6 +12,7 @@ require.config({
     jquery: "../assets/js/libs/jquery",
     underscore: "../assets/js/libs/underscore",
     backbone: "../assets/js/libs/backbone",
+    date: "../assets/js/libs/date",
 
     // Shim Plugin
     use: "../assets/js/plugins/use"
